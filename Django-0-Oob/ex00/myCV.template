@@ -1,0 +1,3 @@
+<p>Hello, my name is {NAME} {SURNAME}.</p>
+<p>I am {AGE} years old.</p>
+<p>Profession: {PROFESSION}</p>
