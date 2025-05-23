@@ -1,8 +1,8 @@
-#!/bin/bash 
+#!/usr/bin/sh
 
 if [ -z "$1" ]
 then
-    echo "Error: URL eksik!"
+    echo "Error: Missing URL!"
     exit 1
 fi
 
