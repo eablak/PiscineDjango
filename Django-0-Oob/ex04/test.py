@@ -8,19 +8,14 @@ from elem import Elem, Text
 def test_text():
     # What is Text?
     assert isinstance(Text(), str)
-   
     # Default behaviour :
     assert str(Text()) == ''
-
-    # # With an argument :
+    # With an argument :
     assert str(Text('')) == ''
-
     assert str(Text('foo')) == 'foo'
-
-    # # Pattern replacing :
+    # Pattern replacing :
     assert str(Text('\n')) == '\n<br />\n'
     assert str(Text('foo\nbar')) == 'foo\n<br />\nbar'
-
     # Escaping <, >, "...
     assert str(Text('<')) == '&lt;'
     assert str(Text('>')) == '&gt;'
@@ -31,33 +26,21 @@ def test_text():
 def test_elem_basics():
     # Default behaviour :
     assert str(Elem()) == '<div></div>'
-
     # Arguments order :
     assert str(Elem('div', {}, None, 'double')) == '<div></div>'
-
-
-    # # Argument names :
-    # print(str(Elem(tag='body', attr={}, content=Elem(),
-                    # tag_type='double')))
+    # Argument names :
     assert str(Elem(tag='body', attr={}, content=Elem(),
                     tag_type='double')) == '<body>\n  <div></div>\n</body>'
-    
-#     # With elem as content :
-    # print(str(Elem(content=Elem())))
+    # With elem as content :
     assert str(Elem(content=Elem())) == '<div>\n  <div></div>\n</div>'
-    
-#     # With list as content :
-    # print(str(Elem(content=[Text('foo'), Text('bar'), Elem()])))
+    # With list as content :
     assert str(Elem(content=[Text('foo'), Text('bar'), Elem()])) == '<div>\n  foo\n  bar\n \
  <div></div>\n</div>'
-    
     print('Basic Elem behaviour : OK.')
 
     
 def test_empty_texts():
-    # print(str(Elem(content=Text(''))))
     assert str(Elem(content=Text(''))) == '<div></div>'
-    # print(str(Elem(content=[Text(''), Text('')])))
     assert str(Elem(content=[Text(''), Text('')])) == '<div></div>'
     assert str(Elem(content=[Text('foo'), Text(''), Elem()])) == '<div>\n  foo\
 \n  <div></div>\n</div>'
@@ -115,7 +98,6 @@ def test_errors():
 
 
 def test_embedding():
-    # print(str(Elem(content=Elem(content=Elem(content=Elem())))))
     assert (str(Elem(content=Elem(content=Elem(content=Elem()))))
             == """<div>
   <div>
