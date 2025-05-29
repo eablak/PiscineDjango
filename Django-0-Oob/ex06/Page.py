@@ -94,16 +94,31 @@ class Page():
 
 
         if isinstance(elem, Tr):
-            if len(elem.content) > 1:
+            if len(elem.content) > 0:
                 for el in elem.content:
                     if not isinstance(el, Th) and not isinstance(el, Td):
                         return False
-                # returns = [self.checkForValid(el) for el in elem.content]
-                # if False in returns:
-                #     return False
-            # else:
-            #     return False
+                returns = [self.checkForValid(el) for el in elem.content]
+                if False in returns:
+                    return False
+
+                el_list = [el.__class__.__name__ for el in elem.content]
+                return(all([el == el_list[0] for el in el_list]))
+
             return True
+
+
+        if isinstance(elem, Table):
+            if len(elem.content) > 0:
+                for el in elem.content:
+                    if not isinstance(el, Tr):
+                        return False
+                returns = [self.checkForValid(el) for el in elem.content]
+                if False in returns:
+                    return False
+            return True
+
+
 
         return False
 
@@ -354,9 +369,57 @@ def test_tr():
     start_end("END", "TR")
     print("\n")
 
+    # -----------------TEST2--------------------------
+
+    start_end("START", "TR")
+    page_tr = Page(Html([Head(Title()), Body([H1(), Li(), Tr([Th(), Th(Text("hello"))])])]))
+    print(page_tr.elem)
+    print("\nRESULT =", page_tr.is_valid())
+    start_end("END", "TR")
+    print("\n")
+    
+    # -----------------TEST3--------------------------
+
+    start_end("START", "TR")
+    page_tr = Page(Html([Head(Title()), Body([H1(), Li(), Tr([Td(), Th()])])]))
+    print(page_tr.elem)
+    print("\nRESULT =", page_tr.is_valid())
+    start_end("END", "TR")
+    print("\n")
+
+
+def test_table():
+
+    # -----------------TEST1--------------------------
+
+    start_end("START", "Table")
+    page_table = Page(Html([Head(Title()), Body([H1(), Li(), Table()])]))
+    print(page_table.elem)
+    print("\nRESULT =", page_table.is_valid())
+    start_end("END", "Table")
+    print("\n")
+
+    # -----------------TEST2--------------------------
+
+    start_end("START", "Table")
+    page_table = Page(Html([Head(Title()), Body([H1(), Li(), Table([Tr(), Tr([Td()])])])]))
+    print(page_table.elem)
+    print("\nRESULT =", page_table.is_valid())
+    start_end("END", "Table")
+    print("\n")
+
+    # -----------------TEST3--------------------------
+
+    start_end("START", "Table")
+    page_table = Page(Html([Head(Title()), Body([H1(), Li(), Table([Tr(), Tr(), Text("table text")])])]))
+    print(page_table.elem)
+    print("\nRESULT =", page_table.is_valid())
+    start_end("END", "Table")
+    print("\n")
 
 
 def tests():
+    
     test_html()
     test_head()
     test_body_div()
@@ -365,6 +428,7 @@ def tests():
     test_span()
     test_ul_ol()
     test_tr()
+    test_table()
 
 
 if __name__ == '__main__':
