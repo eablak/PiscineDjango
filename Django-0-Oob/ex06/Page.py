@@ -12,6 +12,26 @@ class Page():
 
     def is_valid(self) -> bool:
         return self.checkForValid(self.elem)
+    
+    def display(self) -> None:
+        
+        result = ""
+        if isinstance(self.elem, Html):
+            result += "<!DOCTYPE html>\n"
+        result += str(self.elem)
+        print(result)
+
+
+    def write_to_file(self, file_name):
+        
+        self.file_name = file_name
+        result = ""
+        if isinstance(self.elem, Html):
+            result += "<!DOCTYPE html>\n"
+        result += str(self.elem)
+
+        with open(file_name, "a") as f:
+            f.write(result)
 
 
     def checkForValid(self, elem) -> bool:
@@ -418,8 +438,39 @@ def test_table():
     print("\n")
 
 
-def tests():
+def test_general():
     
+    # -----------------TEST1--------------------------
+
+    start_end("START", "Random")
+    page_random = Page(P(Text("hello")))
+    page_random.display()
+    start_end("END", "Random")
+    print("\n")
+
+    # -----------------TEST2--------------------------
+
+    start_end("START", "Random")
+    page_random = Page(Html([Head(Title()), Body([H1(), Li(), Table([Tr(), Tr([Td()])])])]))
+    page_random.display()
+    print("\n",page_random.is_valid())
+    start_end("END", "Random")
+    print("\n")
+
+    # -----------------TEST3--------------------------
+
+    start_end("START", "Random")
+    page_random = Page(Html([Head(Title()), Body([H1(), Li(), Table([Tr(), Tr([Td()])])])]))
+    print("\n",page_random.is_valid())
+    page_random.write_to_file("my_file.txt")
+    start_end("END", "Random")
+    print("\n")
+
+
+
+
+def tests():
+
     test_html()
     test_head()
     test_body_div()
@@ -429,6 +480,7 @@ def tests():
     test_ul_ol()
     test_tr()
     test_table()
+    test_general()
 
 
 if __name__ == '__main__':

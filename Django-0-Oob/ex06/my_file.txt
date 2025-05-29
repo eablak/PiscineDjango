@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+  </head>
+  <body>
+    <h1></h1>
+    <li></li>
+    <table>
+      <tr></tr>
+      <tr>
+        <td></td>
+      </tr>
+    </table>
+  </body>
+</html>
