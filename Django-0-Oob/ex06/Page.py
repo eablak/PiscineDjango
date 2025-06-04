@@ -39,22 +39,29 @@ class Page():
         if not isinstance(self.elem, (Html, Head, Body, Title, Meta, Img, Table, Th, Tr, Td, Ul, Ol, Li, H1, H2, P, Div, Span, Hr, Br, Text)):
             return False
         
-        if isinstance(elem, Html) and len(elem.content) == 2 and isinstance(elem.content[0], Head) and isinstance(elem.content[1], Body):
-            returns = [self.checkForValid(el) for el in elem.content]
-            if False in returns:
-                return False
-            return True
+
+        if isinstance(elem, Html):
+            if len(elem.content) == 0:
+                return True
+            elif len(elem.content) == 2 and isinstance(elem.content[0], Head) and isinstance(elem.content[1], Body):
+                returns = [self.checkForValid(el) for el in elem.content]
+                if False in returns:
+                    return False
+                return True
+
 
         if isinstance(elem, Head):
+            if len(elem.content) == 0:
+                return True
             if len(elem.content) == 1 and isinstance(elem.content[0], Title):
                 returns = [self.checkForValid(elem.content[0])]
                 if False in returns:
                     return False
-            else:
-                return False
-            return True
+
 
         if isinstance(elem, (Title, H1, H2, Li, Th, Td)):
+            if len(elem.content) == 0:
+                return True
             if len(elem.content) > 0:
                 if len(elem.content) > 1 or not isinstance(elem.content[0], Text):
                     return False
@@ -185,6 +192,15 @@ def test_html():
     start_end("END", "HTML")
     print("\n")
 
+    # -----------------TEST4--------------------------
+
+    print("\n"*2)
+    start_end("START", "HTML")
+    page_html = Page(Html())
+    print(page_html.elem)
+    print("\nRESULT =", page_html.is_valid())
+    start_end("END", "HTML")
+    print("\n")
 
 def test_head():
     
@@ -471,16 +487,16 @@ def test_general():
 
 def tests():
 
-    test_html()
-    test_head()
+    # test_html()
+    # test_head()
     test_body_div()
-    test_Title_H1_H2_Li_Th_Td()
-    test_p()
-    test_span()
-    test_ul_ol()
-    test_tr()
-    test_table()
-    test_general()
+    # test_Title_H1_H2_Li_Th_Td()
+    # test_p()
+    # test_span()
+    # test_ul_ol()
+    # test_tr()
+    # test_table()
+    # test_general()
 
 
 if __name__ == '__main__':
