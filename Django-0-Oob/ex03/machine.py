@@ -22,12 +22,12 @@ class CoffeeMachine:
     def repair(self):
         self.status = 10
 
-    def serve(self, drink: HotBeverage) -> HotBeverage:
+    def serve(self, drink: HotBeverage) -> HotBeverage: #just annotations not restricted
         if self.status <= 0:
-            raise CoffeeMachine.BrokenMachineException
+            raise self.BrokenMachineException
         self.status -= 1
         if random.randint(0,5) == 0:
-            return CoffeeMachine.EmpytCup()
+            return self.EmpytCup()
         return drink
 
 
@@ -42,7 +42,7 @@ if __name__ == "__main__":
             rand_drink = random.choice(drinks)
             print(coffemach.serve(rand_drink))
             print("\n")
-        except CoffeeMachine.BrokenMachineException as e:
+        except coffemach.BrokenMachineException as e:
             print(e)
             coffemach.repair()
             print("\n")

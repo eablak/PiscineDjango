@@ -53,7 +53,6 @@ class Elem:
         result = ""
         if self.tag_type == 'double':
             result = f"<{self.tag}{self.__make_attr()}>"
-            result = f"<{self.tag}>"
             result += f"{self.__make_content()}"
             result += f"</{self.tag}>"
         elif self.tag_type == 'simple':
