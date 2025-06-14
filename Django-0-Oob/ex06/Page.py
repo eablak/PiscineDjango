@@ -95,41 +95,27 @@ class Page():
 
 
         if isinstance(elem, Tr):
+            
             if len(elem.content) > 0:
-                for el in elem.content:
-                    if not isinstance(el, Th) and not isinstance(el, Td):
-                        return False
-                returns = [self.checkForValid(el) for el in elem.content]
-                if False in returns:
-                    return False
-
-                el_list = [el.__class__.__name__ for el in elem.content]
-                return(all([el == el_list[0] for el in el_list]))
-
-            return True
+                if all(isinstance(el, (Th,Td)) for el in elem.content):
+                        el_list = [el.__class__.__name__ for el in elem.content]
+                        if all([el == el_list[0] for el in el_list]):
+                            return all(self.checkForValid(el) for el in elem.content)
 
 
         if isinstance(elem, Table):
-            if len(elem.content) > 0:
-                for el in elem.content:
-                    if not isinstance(el, Tr):
-                        return False
-                returns = [self.checkForValid(el) for el in elem.content]
-                if False in returns:
-                    return False
-            return True
+
+            if not elem.content:
+                return True
+            if all(isinstance(el,Tr) for el in elem.content):
+                return all(self.checkForValid(el) for el in elem.content)
 
 
-        if isinstance(elem, Text):
+        if isinstance(elem, (Meta, Img, Hr, Br, Text)):
             return True
 
 
         return False
-
-
-
-
-
 
 
 def start_end(flag, class_name):
@@ -138,6 +124,7 @@ def start_end(flag, class_name):
         print("-" * 20, flag, class_name, "-" * 20)
     else:
         print("-" * 20, flag, class_name, "-" * 20)
+
 
 
 def test_html():
@@ -376,8 +363,8 @@ def test_tr():
     # -----------------TEST1--------------------------
 
     start_end("START", "TR")
-    page_tr = Page(Html([Head(Title()), Body([H1(), Li(), Tr([Td()])])]))
-    print(page_tr.elem)
+    page_tr = Page(Tr())
+    page_tr.display()
     print("\nRESULT =", page_tr.is_valid())
     start_end("END", "TR")
     print("\n")
@@ -385,17 +372,17 @@ def test_tr():
     # -----------------TEST2--------------------------
 
     start_end("START", "TR")
-    page_tr = Page(Html([Head(Title()), Body([H1(), Li(), Tr([Th(), Th(Text("hello"))])])]))
-    print(page_tr.elem)
+    page_tr = Page(Tr([Th(), Th(Text("lslsl"))]))
+    page_tr.display()
     print("\nRESULT =", page_tr.is_valid())
     start_end("END", "TR")
     print("\n")
 
-    # -----------------TEST3--------------------------
+    # # -----------------TEST3--------------------------
 
     start_end("START", "TR")
-    page_tr = Page(Html([Head(Title()), Body([H1(), Li(), Tr([Td(), Th()])])]))
-    print(page_tr.elem)
+    page_tr = Page(Tr([Td(), Th(Text("lslsl"))]))
+    page_tr.display()
     print("\nRESULT =", page_tr.is_valid())
     start_end("END", "TR")
     print("\n")
@@ -406,8 +393,8 @@ def test_table():
     # -----------------TEST1--------------------------
 
     start_end("START", "Table")
-    page_table = Page(Html([Head(Title()), Body([H1(), Li(), Table()])]))
-    print(page_table.elem)
+    page_table = Page(Html([Head(Title()), Body([H1(), Span(), Table()])]))
+    page_table.display()
     print("\nRESULT =", page_table.is_valid())
     start_end("END", "Table")
     print("\n")
@@ -415,17 +402,17 @@ def test_table():
     # -----------------TEST2--------------------------
 
     start_end("START", "Table")
-    page_table = Page(Html([Head(Title()), Body([H1(), Li(), Table([Tr(), Tr([Td()])])])]))
-    print(page_table.elem)
+    page_table = Page(Html([Head(Title()), Body([H1(), Span(), Table(Tr([Th(), Th(Text("th is ok"))]))])]))
+    page_table.display()
     print("\nRESULT =", page_table.is_valid())
     start_end("END", "Table")
     print("\n")
 
-    # -----------------TEST3--------------------------
+    # # -----------------TEST3--------------------------
 
     start_end("START", "Table")
-    page_table = Page(Html([Head(Title()), Body([H1(), Li(), Table([Tr(), Tr(), Text("table text")])])]))
-    print(page_table.elem)
+    page_table = Page(Html([Head(Title()), Body([H1(), Span(), Table(Tr([Th(), H1(Text("h1 is not ok"))]))])]))
+    page_table.display()
     print("\nRESULT =", page_table.is_valid())
     start_end("END", "Table")
     print("\n")
@@ -436,26 +423,19 @@ def test_general():
     # -----------------TEST1--------------------------
 
     start_end("START", "Random")
-    page_random = Page(P(Text("hello")))
+    page_random = Page(Html([Head(Title(Text("what's up"))), Body([H1(), H2(), Div(), Div([Ol(Li(Text("ol needs li"))), Span(), Text("div text")])])]))
     page_random.display()
+    print("\n",page_random.is_valid())
     start_end("END", "Random")
     print("\n")
 
     # -----------------TEST2--------------------------
 
     start_end("START", "Random")
-    page_random = Page(Html([Head(Title()), Body([H1(), Li(), Table([Tr(), Tr([Td()])])])]))
+    page_random = Page(Html([Head(Title()), Body([Table(Tr([Th(Text("th needs..")), Th(Text("..th or td"))])), H1(Text("---")), Table(Tr([Td(Text("..just one")), Td(Text("..of them"))]))])]))
     page_random.display()
-    print("\n",page_random.is_valid())
-    start_end("END", "Random")
-    print("\n")
-
-    # -----------------TEST3--------------------------
-
-    start_end("START", "Random")
-    page_random = Page(Html([Head(Title()), Body([H1(), Li(), Table([Tr(), Tr([Td()])])])]))
-    print("\n",page_random.is_valid())
     page_random.write_to_file("my_file.txt")
+    print("\n",page_random.is_valid())
     start_end("END", "Random")
     print("\n")
 
@@ -470,15 +450,12 @@ def tests():
     # test_Title_H1_H2_Li_Th_Td()
     # test_p()
     # test_span()
-    test_ul_ol()
+    # test_ul_ol()
     # test_tr()
     # test_table()
-    # test_general()
+    test_general()
 
 
 if __name__ == '__main__':
 
     tests()
-
-    # a = Page(Html([Head(Title()), Body(Ol(), H1(Text("asdasd")))]))
-    # print(a.is_valid())

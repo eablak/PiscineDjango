@@ -4,12 +4,27 @@
     <title></title>
   </head>
   <body>
-    <h1></h1>
-    <li></li>
     <table>
-      <tr></tr>
       <tr>
-        <td></td>
+        <th>
+          th needs..
+        </th>
+        <th>
+          ..th or td
+        </th>
+      </tr>
+    </table>
+    <h1>
+      ---
+    </h1>
+    <table>
+      <tr>
+        <td>
+          ..just one
+        </td>
+        <td>
+          ..of them
+        </td>
       </tr>
     </table>
   </body>
