@@ -15,17 +15,18 @@ def send_request(page):
     }
     
     try:
-        res = requests.get(url=URL, params=PARAMS)
+        res = requests.get(url=URL, params=PARAMS) #return the status code
+        # print(res.url)
+        # print(res.status_code)
+        try:
+            data = json.loads(res.text) #parse valid json string and convert to in to python dict.
+            # print(data)
+            return(dewiki.from_string(data["parse"]["wikitext"]["*"]))
+        except json.decoder.JSONDecodeError:
+            print('Decoding JSON has failed')
     except:
         raise requests.HTTPError
-    try:
-        data = json.loads(res.text)
-    except:
-        raise json.decoder.JSONDecodeError
-    if data.get("error") is not None:
-        raise Exception(data["error"]["info"])
-    return(dewiki.from_string(data["parse"]["wikitext"]["*"]))
-
+    
 
 
 if __name__ == "__main__":
