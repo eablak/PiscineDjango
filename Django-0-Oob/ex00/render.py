@@ -23,15 +23,17 @@ def create_html(content):
 
 def process(content):
     
-    with open("settings.py","r") as file:
-        for line in file:
-            if "=" in line:
-                key, value = line.split("=")
-                key = key.strip()
-                value = value.strip().strip('"')
-                pattern = r"\{" + re.escape(key.strip()) + r"\}"
-                content = re.sub(pattern,value,content)
-    
+    try:
+        with open("settings.py","r") as file:
+            for line in file:
+                if "=" in line:
+                    key, value = line.split("=")
+                    key = key.strip()
+                    value = value.strip().strip('"')
+                    pattern = r"\{" + re.escape(key.strip()) + r"\}"
+                    content = re.sub(pattern,value,content)
+    except FileNotFoundError:
+        print("File not Found!")
     create_html(content)
     return content
 

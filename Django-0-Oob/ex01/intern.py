@@ -21,8 +21,7 @@ if __name__ == "__main__":
     i1 = Intern()
     i2 = Intern("Mark")
 
-    print(i1.__str__())
-    # print(i1)
+    print(i1)
     print(i2.__str__())
     print(i2.make_coffee())
     try:

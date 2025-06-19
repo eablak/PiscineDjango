@@ -13,7 +13,7 @@ class HotBeverage:
     
 class Coffe(HotBeverage):
 
-    def __init__(self): # when you add the __init__() func, the child class will no longer inherit the parent's __init__ func. The childs __init__() funstion ovverride the inheritence of parent's __init__() function
+    def __init__(self):
         HotBeverage.__init__(self,"coffee", 0.40)
 
     def description(self):
@@ -23,7 +23,6 @@ class Coffe(HotBeverage):
 class Tea(HotBeverage):
 
     def __init__(self):
-        #using super() func, you do not need have to use the name of parent element, it will automatically inherit the methods and properties from its parrent.
         super().__init__("tea", 0.30)
 
     def description(self):

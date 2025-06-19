@@ -22,7 +22,7 @@ class CoffeeMachine:
     def repair(self):
         self.status = 10
 
-    def serve(self, drink: HotBeverage) -> HotBeverage: #just annotations not restricted
+    def serve(self, drink: HotBeverage) -> HotBeverage:
         if self.status <= 0:
             raise self.BrokenMachineException
         self.status -= 1

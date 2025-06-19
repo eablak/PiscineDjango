@@ -1,4 +1,3 @@
-NAME = "xx"
-SURNAME = "yy"
+FIRSTNAME = "xx"
+LASTNAME = "yy"
 AGE = "0"
-PROFESSION = "zzz"
