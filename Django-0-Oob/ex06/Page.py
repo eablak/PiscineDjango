@@ -47,9 +47,7 @@ class Page():
 
 
         if isinstance(elem, Head): 
-            # hata satırı (head title almalı)
-            if not elem.content:
-                return True
+            
             if len(elem.content) == 1 and isinstance(elem.content[0], Title):
                 return self.checkForValid(elem.content[0])
 
