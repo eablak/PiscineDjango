@@ -1,3 +1,5 @@
+#!/bin/bash
+
 VENV_DIR="django_venv"
 LOG_FILE="pip_install.log"
 
