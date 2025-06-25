@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Ex01: Template engine.{% endblock %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'style2.css' %}">
+{% endblock %}
+{% block content %}
+    <h1>Django Template Engine</h1>
+
+    <p>Django uses a template engine to combine Python data with HTML pages. Templates help create dynamic web pages easily.</p>
+
+    <h2>1. Blocks</h2>
+    <p>Blocks are used to insert content into a base layout. They are defined in base.html and filled in other templates.</p>
+    <p>
+        &#123;% block content &#125;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;This is my page content.&lt;/p&gt;<br>
+        &#123;% endblock &#125;
+    </p>
+
+    <h2>2. for ... in Loops</h2>
+    <p>You can loop over a list of items passed from the view.</p>
+    <p>
+        &#123;% for fruit in fruits &#125;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;&#123;&#123; fruit &#125;&#125;&lt;/p&gt;<br>
+        &#123;% endfor &#125;
+    </p>
+    <p>This will show each fruit in the list.</p>
+
+    <h2>3. if Control Structures</h2>
+    <p>You can show different content depending on conditions.</p>
+    <p>
+        &#123;% if user.is_authenticated &#125;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Welcome, &#123;&#123; user.username &#125;&#125;!&lt;/p&gt;<br>
+        &#123;% else &#125;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Please log in.&lt;/p&gt;<br>
+        &#123;% endif &#125;
+    </p>
+
+    <h2>4. Displaying Context Variables</h2>
+    <p>Variables from the view can be shown using double curly braces.</p>
+    <p>
+        &#123;&#123; name &#125;&#125;
+    </p>
+    <p>For example, if name = "Alice", it will display: Hello, Alice!</p>
+
+    <h2>Summary</h2>
+    <ul>
+        <li><strong>Blocks</strong> let you insert content into base templates</li>
+        <li><strong>for</strong> loops repeat over a list</li>
+        <li><strong>if</strong> shows content based on conditions</li>
+        <li><strong>{{ variable }}</strong> displays data passed from Python</li>
+    </ul>
+{% endblock %}
