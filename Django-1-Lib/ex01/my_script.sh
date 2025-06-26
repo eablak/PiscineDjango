@@ -1,7 +1,5 @@
 #!/bin/bash   
 
-#-> without source not found
-
 VENV_DIR="local_lib"
 LOG_FILE="pip_install.log"
 URL_PATH="https://github.com/jaraco/path.git"
