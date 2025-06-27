@@ -2,12 +2,6 @@ import sys
 import requests
 from bs4 import BeautifulSoup
 
-def handle_args(words):
-
-    parameter = "_".join(words.split())
-    return parameter
-
-
 
 class Philosophy:
 
@@ -65,12 +59,14 @@ class Philosophy:
         self.to_reach_philosophy(self.link)
 
 
+def main():
 
-if __name__ == "__main__":
-    
     if len(sys.argv) == 2:
-        parameter = handle_args(sys.argv[1])
-        philo = Philosophy(parameter)
-        
+        parameter = "_".join(sys.argv[1].split())
+        Philosophy(parameter)
     else:
         print("Wrong argument count")
+
+
+if __name__ == "__main__":
+    main()
