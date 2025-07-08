@@ -1,4 +1,5 @@
 from django import forms
 
-class InputForm(forms.Form):
+class History(forms.Form):
+    history = forms.CharField(label='history')
     context = forms.CharField(widget=forms.Textarea())
