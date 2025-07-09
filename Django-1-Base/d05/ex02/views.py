@@ -1,22 +1,23 @@
-import logging
-from django.http import HttpRequest
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.conf import settings
-from . import forms
+from .forms import InputForm
+import logging
 
 
-def index(request: HttpRequest):
-    logger = logging.getLogger('history')
+def index(request):
 
-    if request.method == 'POST':
-        form = forms.History(request.POST)
+    logger = logging.getLogger('history_log')
+    context = {}
+    context["form"] = InputForm()
+
+    if request.method == "POST":
+        form = InputForm(request.POST)
         if form.is_valid():
-            logger.info(form.cleaned_data['history'])
-        return redirect('/ex02')
-    try:
-        f = open(settings.LOG_FILE_PATH, 'r')
-        historys = [line for line in f.readlines()]
-    except:
-        historys = []
+            logger.info(form.cleaned_data["textfield"])
+            return redirect("/ex02")
+    
+    file = open(settings.LOG_FILE, "r")
+    context["lines"] = [line.strip() for line in file]
 
-    return render(request, 'ex02/index.html', {'form': forms.History(), 'historys': historys})
+    return render(request, "ex02/index.html", context)

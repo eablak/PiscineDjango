@@ -125,8 +125,8 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+LOG_FILE = BASE_DIR / "ex02/log.txt"
 
-LOG_FILE_PATH = os.path.join(BASE_DIR, 'ex02', 'ex02.log')
 
 LOGGING = {
     'version': 1,
@@ -170,8 +170,7 @@ LOGGING = {
         'history_handler': {
             'level': 'INFO',
             'class': 'logging.FileHandler',
-            'filename': LOG_FILE_PATH,
-            'mode': 'a',
+            'filename': LOG_FILE,
             'formatter': 'history_format',
         },
     },
@@ -185,7 +184,7 @@ LOGGING = {
             'level': 'INFO',
             'propagate': False,
         },
-        'history': {
+        'history_log': {
             'handlers': ['console', 'history_handler'],
             'level': 'INFO'
         }

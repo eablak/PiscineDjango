@@ -1,12 +1,29 @@
-{% extends 'ex02/base.html' %} {% load static %} {% block title %}
-<title>History Form!</title>
-{% endblock title %} {% block style %} {% endblock style %} {% block content %}
-<h1>History Form!</h1>
-<form action="" method="post">
-  {% csrf_token %} {{ form.as_table }}
-  <input type="submit" value="Submit" />
-</form>
-<h1>History Data!</h1>
-{% for history in historys reversed %}
-<p>{{ history }}</p>
-{% endfor %} {% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block style %}
+        <link rel="stylesheet" href="">
+    {% endblock %}
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    <form action = "" method = "post">
+        {% csrf_token %}
+        {{form }}
+        <input type="submit" value="Submit">
+    </form>
+    {% block content %}{% endblock %}
+    <h3>Input History</h3>
+    <table>
+        {% for line in lines %}
+        <tr>
+            <td>
+                {{line}}
+            </td>
+        </tr>
+        {% endfor %}
+    </table> 
+</body>
+</html>
