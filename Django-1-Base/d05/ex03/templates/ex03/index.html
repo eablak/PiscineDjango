@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="">
+        <style>
+            td{
+                width:80px;
+                height:40px;
+            }
+        </style>
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    
+    <table border="1">
+
+        <th>Noir</th>
+        <th>Rouge</th>
+        <th>Bleu</th>
+        <th>Vert</th>
+      
+        
+        {% for i in range%}
+        <tr>
+            <td style="background-color: #{{i}}{{i}}{{i}}"></td>
+            <td style="background-color: #{{i}}0000"></td>
+            <td style="background-color: #00{{i}}00"></td>
+            <td style="background-color: #0000{{i}}"></td>
+        </tr>
+        {% endfor %}
+        
+
+
+    </table>
+
+    {% block content %}{% endblock %}
+    
+</body>
+</html>
