@@ -73,5 +73,27 @@ djangotraining=# SELECT * FROM ex00_movies;
 djangotraining=# DELETE FROM ex00_movies;
 DELETE 1
 djangotraining=# exit
+
+
 ex00
+-----------------------------------------------------------------------------
+
+python3 manage.py makemigrations
+Migrations for 'ex01':
+  ex01/migrations/0001_initial.py
+    + Create model Movies
+(myenv) eablak@eablak:~/Desktop/PiscineDjango/Django-2-SQL/d06$ python3 manage.py migrate
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, ex01, sessions
+
+sudo nano /etc/postgresql/14/main/pg_hba.conf 
+sudo systemctl restart postgresql
+eablak@eablak:~/Desktop/PiscineDjango/Django-2-SQL/d06$ psql -d djangotraining -U djangouser -W
+Password: 
+psql (14.18 (Ubuntu 14.18-0ubuntu0.22.04.1))
+Type "help" for help.
+
+djangotraining=>
+
+ex01
 -----------------------------------------------------------------------------
