@@ -1,0 +1,77 @@
+asgiref==3.8.1
+Django==5.2.3
+sqlparse==0.5.3
+typing_extensions==4.14.0
+sudo apt-get install libpq-dev
+
+psycopg2
+sudo apt update
+sudo apt install postgresql
+
+pip install django psycopg2-binary
+psql -U postgres
+
+eablak@eablak:~/Desktop/PiscineDjango/Django-2-SQL/d06$ sudo -i -u postgres
+[sudo] password for eablak: 
+postgres@eablak:~$ psql
+psql (14.18 (Ubuntu 14.18-0ubuntu0.22.04.1))
+Type "help" for help.
+
+postgres=# CREATE USER djangouser WITH PASSWORD 'secret';
+CREATE ROLE
+postgres=# CREATE DATABASE djangotraining OWNER djangouser;
+CREATE DATABASE
+postgres=# GRANT ALL PRIVILEGES ON DATABASE djangotraining TO djangouser;
+GRANT
+postgres=# q
+postgres-# /q
+postgres-# \q
+postgres@eablak:~$ exit
+logout
+
+
+eablak@eablak:~/Desktop/PiscineDjango/Django-2-SQL/d06$ sudo -i -u postgres
+[sudo] password for eablak: 
+postgres@eablak:~$ psql -d djangotraining -U djangouser
+psql: error: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  Peer authentication failed for user "djangouser"
+postgres@eablak:~$ psql -d djangotraining
+psql (14.18 (Ubuntu 14.18-0ubuntu0.22.04.1))
+Type "help" for help.
+
+djangotraining=# \d ex00_movies
+                       Table "public.ex00_movies"
+    Column     |          Type          | Collation | Nullable | Default 
+---------------+------------------------+-----------+----------+---------
+ title         | character varying(64)  |           | not null | 
+ episode_nb    | integer                |           | not null | 
+ opening_crawl | text                   |           |          | 
+ director      | character varying(32)  |           | not null | 
+ producer      | character varying(128) |           | not null | 
+ release_date  | date                   |           | not null | 
+Indexes:
+    "ex00_movies_pkey" PRIMARY KEY, btree (episode_nb)
+    "ex00_movies_title_key" UNIQUE CONSTRAINT, btree (title)
+
+djangotraining=# INSERT INTO ex00_movies (title, episode_nb, opening_crawl, director, producer, release_date)
+djangotraining-# VALUES ('A New Hope', 4, 'It is a period of civil war...', 'George Lucas', 'Gary Kurtz, Rick McCallum', '1977-05-25');
+INSERT 0 1
+djangotraining=# \d ex00_movies
+                       Table "public.ex00_movies"
+    Column     |          Type          | Collation | Nullable | Default 
+---------------+------------------------+-----------+----------+---------
+ title         | character varying(64)  |           | not null | 
+ episode_nb    | integer                |           | not null | 
+ opening_crawl | text                   |           |          | 
+ director      | character varying(32)  |           | not null | 
+ producer      | character varying(128) |           | not null | 
+ release_date  | date                   |           | not null | 
+Indexes:
+    "ex00_movies_pkey" PRIMARY KEY, btree (episode_nb)
+    "ex00_movies_title_key" UNIQUE CONSTRAINT, btree (title)
+
+djangotraining=# SELECT * FROM ex00_movies;
+djangotraining=# DELETE FROM ex00_movies;
+DELETE 1
+djangotraining=# exit
+ex00
+-----------------------------------------------------------------------------
