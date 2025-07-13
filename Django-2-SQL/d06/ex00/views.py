@@ -4,7 +4,7 @@ import psycopg2
 from django.conf import settings
 # Create your views here.
 
-def index(request):
+def init(request):
     # return HttpResponse("initctt")
 
     try:
