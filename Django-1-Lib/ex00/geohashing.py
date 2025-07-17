@@ -15,7 +15,7 @@ def main():
 
         antigravity.geohash(latitude, longitude, date_dow)
     else:
-        print("use like latitude, longitude, date, dow_jones")
+        print("use like latitude, longitude, date_dow")
 
 
 if __name__ == "__main__":
