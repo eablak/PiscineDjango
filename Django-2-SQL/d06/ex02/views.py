@@ -6,17 +6,21 @@ import os
 import json
 
 
+def get_connection():
+    return psycopg2.connect(
+        dbname = settings.DATABASES["default"]["NAME"],
+        user = settings.DATABASES["default"]["USER"],
+        password = settings.DATABASES["default"]["PASSWORD"],
+        host = settings.DATABASES["default"]["HOST"],
+        port = settings.DATABASES["default"]["PORT"]
+    )
+
+
 # Create your views here.
 def init(request):
 
     try:
-        conn = psycopg2.connect(
-            dbname = settings.DATABASES["default"]["NAME"],
-            user = settings.DATABASES["default"]["USER"],
-            password = settings.DATABASES["default"]["PASSWORD"],
-            host = settings.DATABASES["default"]["HOST"],
-            port = settings.DATABASES["default"]["PORT"]
-        )
+        conn = get_connection()
         conn.autocommit = True
         with conn.cursor() as cursor:
             cursor.execute("""
@@ -38,15 +42,8 @@ def init(request):
 def populate(request):
 
     try:
-
-        conn = psycopg2.connect(
-            dbname = settings.DATABASES["default"]["NAME"],
-            user = settings.DATABASES["default"]["USER"],
-            password = settings.DATABASES["default"]["PASSWORD"],
-            host = settings.DATABASES["default"]["HOST"],
-            port = settings.DATABASES["default"]["PORT"]
-        )
-
+        conn = get_connection()
+        
         path = os.path.join(settings.BASE_DIR , "ex02/data/datas.json")
         with open(path) as f:
             movies = json.load(f)
@@ -56,6 +53,7 @@ def populate(request):
             VALUES (%s, %s, %s, %s, %s);
         """
 
+        results = []
 
         with conn.cursor() as cursor:
             for movie in movies:
@@ -66,9 +64,10 @@ def populate(request):
                     movie["producer"],
                     movie["release_date"]
                 ])
+                results.append("OK")
             conn.commit()
             conn.close()
-        return HttpResponse("OK")
+        return HttpResponse("\n".join(str(result) for result in results))
     
     except Exception as e:
         return HttpResponse(e)
@@ -78,14 +77,7 @@ def populate(request):
 def display(request):
 
     try:
-
-        conn = psycopg2.connect(
-            dbname = settings.DATABASES["default"]["NAME"],
-            user = settings.DATABASES["default"]["USER"],
-            password = settings.DATABASES["default"]["PASSWORD"],
-            host = settings.DATABASES["default"]["HOST"],
-            port = settings.DATABASES["default"]["PORT"]
-        )
+        conn = get_connection()
 
         SELECT_TABLE = """
         SELECT * FROM ex02_movies

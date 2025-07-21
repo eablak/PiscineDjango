@@ -26,7 +26,7 @@ def populate(request):
             results.append("OK")
         except Exception as e:
             results.append(e)
-    return HttpResponse("\n".join(str(result)) for result in results)
+    return HttpResponse("\n".join(str(result) for result in results))
 
 
 def display(request):
