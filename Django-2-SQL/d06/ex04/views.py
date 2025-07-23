@@ -91,18 +91,42 @@ def display(request):
 
 def remove(request):
 
-    try:
-        conn = get_connection()
+    if request.method == "GET":
 
-        SELECT_TITLE = """SELECT title FROM ex04_movies"""
+        try:
+            conn = get_connection()
 
-        with conn.cursor() as cursor:
-            cursor.execute(SELECT_TITLE)
-            movies = cursor.fetchall()
-        conn.close()
+            SELECT_TITLE = """SELECT title FROM ex04_movies"""
 
-        if not movies:
-            return HttpResponse("No data available")
-        return render(request, "ex04/remove.html", {"movies":movies})
-    except Exception as e:
-        return HttpResponse(e)
+            with conn.cursor() as cursor:
+                cursor.execute(SELECT_TITLE)
+                movies = cursor.fetchall()
+            conn.close()
+
+            if not movies:
+                return HttpResponse("No data available")
+            return render(request, "ex04/remove.html", {"movies":movies})
+        except Exception as e:
+            return HttpResponse(e)
+        
+    if request.method == "POST":
+
+        try:
+            conn  = get_connection()
+            title = request.POST.get("title")
+            DELETE_ROW = """DELETE FROM ex04_movies WHERE title=%s"""
+            SELECT_TITLE = """SELECT title FROM ex04_movies"""
+            
+            with conn.cursor() as cursor:
+                cursor.execute(DELETE_ROW, (title,))
+                cursor.execute(SELECT_TITLE)
+                movies = cursor.fetchall()
+            conn.commit()
+            conn.close()
+
+            if not movies:
+                return HttpResponse("No data available")
+            return render(request, "ex04/remove.html", {"movies":movies})
+
+        except Exception as e:
+            return HttpResponse(e)
