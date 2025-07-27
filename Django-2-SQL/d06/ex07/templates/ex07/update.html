@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% if titles %}
+    <form method="POST">
+        {% csrf_token %}
+        <label for="title">Select movie for update:</label>
+        <select name="selected_movie" id="selected_movie">
+            {% for title in titles %}
+                <option value="{{ title.0 }}">{{ title.0 }}</option>
+            {% endfor %}
+        </select>
+
+        {{ form.textfield }}
+
+        <input type="submit" value="Update">
+    </form>
+    {% else %}
+        <p>No data available</p>
+    {% endif %}
+</body>
+</html>
