@@ -65,19 +65,44 @@ def populate(request):
         conn = get_connection()
         cursor = conn.cursor()
 
+        results = []
+
         people_path = os.path.join(settings.BASE_DIR, "ex08/datas/people.csv")
         planets_path = os.path.join(settings.BASE_DIR, "ex08/datas/planets.csv")
 
         with open(planets_path) as f:
             cursor.copy_expert("COPY ex08_planets (name, climate, diameter, orbital_period, population, rotation_period, surface_water, terrain) FROM STDIN DELIMITER '\t' NULL AS 'NULL';", f)
+            results.append("OK")
 
         with open(people_path) as f:
             cursor.copy_expert("COPY ex08_people (name, birth_year, gender, eye_color, hair_color, height, mass, homeworld) FROM STDIN DELIMITER '\t' NULL AS 'NULL';", f)
+            results.append("OK")
 
 
         conn.commit()
         conn.close()
-        return HttpResponse("OK")
+        return HttpResponse("\n".join(str(result) for result in results))
+
+    
+    except Exception as e:
+        return HttpResponse(e)
+    
+
+def display(request):
+    
+    try:
+        conn = get_connection()
+        SELECT_TABLE = """SELECT * FROM ex08_people INNER JOIN ex08_planets ON ex08_people.homeworld = ex08_planets.name ORDER BY ex08_people.name"""
+
+        with conn.cursor() as cursor:
+            cursor.execute(SELECT_TABLE)
+            peoples = cursor.fetchall()
+
+        conn.close()
+
+        if not peoples:
+            return HttpResponse("No data available")
+        return render(request, "ex08/display.html", {"peoples":peoples})
     
     except Exception as e:
         return HttpResponse(e)
