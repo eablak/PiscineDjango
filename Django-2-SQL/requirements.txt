@@ -2,24 +2,4 @@ asgiref==3.8.1
 Django==5.2.3
 sqlparse==0.5.3
 typing_extensions==4.14.0
-sudo apt-get install libpq-dev
-
-psycopg2
-sudo apt update
-sudo apt install postgresql
-
-pip install django psycopg2-binary
-psql -U postgres
-
-# psql -d djangotraining -U djangouser
-# \dt
-# INSERT INTO ex00_movies (title, episode_nb, opening_crawl, director, producer, release_date)
-# VALUES (
-#     'A New Hope',
-#     4,
-#     'It is a period of civil war...',
-#     'George Lucas',
-#     'Gary Kurtz',
-#     '1977-05-25'
-# );
-# SELECT * FROM ex00_movies;
+psycopg2-binary
