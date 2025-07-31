@@ -7,12 +7,12 @@
 </head>
 <body>
     <table border=1>
-    {% for planet in planets %}
+    {% for people in peoples %}
         <tr>
-          <td>{{ planet.name }}</td>
-          <td>{{ planet.climate }}</td>
-          <td>{{ planet.diameter }}</td>
-          <td>{{ planet.orbital_period }}</td>
+          <td>{{ people.name }}</td>
+          <td>{{ people.homeworld.name }}</td>
+          <td>{{ people.homeworld.climate }}</td>
+         
         </tr>
         {% endfor %}
     </table>
