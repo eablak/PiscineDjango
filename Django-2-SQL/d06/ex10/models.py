@@ -1,20 +1,3 @@
-from django import forms
-
-GenderChoices= [
-    ('female', 'Female'),
-    ('male', 'Male'),
-    ]
-
-class InputForm(forms.Form):
-    minimumDate_movies = forms.DateField(label="Minimum Date")
-    maximumDate_movies = forms.DateField(label="Maximum Date")
-    diameter_planet = forms.IntegerField(label="Diameter")
-    gender_chrc = forms.CharField(label='Gender', widget=forms.Select(choices=GenderChoices))
-
-
-
---------------------------
-
 from django.db import models
 
 # Create your models here.
@@ -68,50 +51,3 @@ class Movies(models.Model):
 
     def __str__(self):
         return self.title
-
-
-# djangotraining=> ALTER TABLE ex10_planets ALTER COLUMN created DROP NOT NULL;
-# ALTER TABLE
-# djangotraining=> ALTER TABLE ex10_planets ALTER COLUMN updated DROP NOT NULL;
-# ALTER TABLE
-# djangotraining=> ALTER TABLE ex10_people ALTER COLUMN created DROP NOT NULL;
-# ALTER TABLE
-# djangotraining=> ALTER TABLE ex10_people ALTER COLUMN updated DROP NOT NULL;
-# ALTER TABLE
-
-----------------------------------
-
-from django.contrib import admin
-from .models import Planets, People, Movies
-# Register your models here.
-
-admin.site.register(Planets)
-admin.site.register(People)
-admin.site.register(Movies)
-
-------------------------------
-
-
-from django.shortcuts import render
-from django.http import HttpResponse
-from .forms import InputForm
-from .models import Planets, People, Movies
-
-# Create your views here.
-
-def init(request):
-
-    if request.method == "GET":
-        context = {}
-        context["form"] = InputForm()
-        return render(request, "ex10/display.html", context)
-    
-    if request.method == "POST":
-
-        planets = Planets.objects.all()
-        peoples = People.objects.all()
-        movies = Movies.objects.all()
-
-        return HttpResponse("post")
-
-        
