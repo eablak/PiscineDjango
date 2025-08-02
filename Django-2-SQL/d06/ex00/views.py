@@ -5,7 +5,6 @@ from django.conf import settings
 # Create your views here.
 
 def init(request):
-    # return HttpResponse("initctt")
 
     try:
         conn = psycopg2.connect(

@@ -49,6 +49,10 @@ def init(request):
                 $$ language 'plpgsql';
             """)
 
+            cursor.execute("""
+                DROP TRIGGER IF EXISTS update_films_changetimestamp ON ex06_movies
+            """)
+
             cursor.execute("""CREATE TRIGGER update_films_changetimestamp BEFORE UPDATE
                 ON ex06_movies FOR EACH ROW EXECUTE PROCEDURE
                 update_changetimestamp_column();
@@ -71,7 +75,7 @@ def populate(request):
 
         INSERT_DATA = """
             INSERT INTO ex06_movies (episode_nb, title, director, producer, release_date)
-            VALUES (%s, %s, %s, %s, %s);
+            VALUES (%s, %s, %s, %s, %s) ON CONFLICT (episode_nb) DO NOTHING;
         """
 
         results = []

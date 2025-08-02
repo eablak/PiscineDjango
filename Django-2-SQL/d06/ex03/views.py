@@ -5,6 +5,8 @@ from django.conf import settings
 import json
 from .models import Movies
 from django import db
+from django.db import IntegrityError
+
 
 # Create your views here.
 def populate(request):
@@ -24,6 +26,8 @@ def populate(request):
                 release_date=movie['release_date'],
             )
             results.append("OK")
+        except IntegrityError:
+            pass
         except Exception as e:
             results.append(e)
     return HttpResponse("\n".join(str(result) for result in results))

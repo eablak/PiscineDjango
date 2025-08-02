@@ -10,9 +10,5 @@ class Movies(models.Model):
     producer = models.CharField(max_length=128, null=False)
     release_date = models.DateField(null=False)
 
-    # automaticlly -> appname_modelname
-    # class Meta:
-    #     db_table = "ex01_movies"
-
     def __str__(self):
         return self.title

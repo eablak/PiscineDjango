@@ -50,7 +50,7 @@ def populate(request):
 
         INSERT_DATA = """
             INSERT INTO ex02_movies (episode_nb, title, director, producer, release_date)
-            VALUES (%s, %s, %s, %s, %s);
+            VALUES (%s, %s, %s, %s, %s) ON CONFLICT (episode_nb) DO NOTHING;
         """
 
         results = []
