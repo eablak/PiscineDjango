@@ -1,12 +1,38 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import JsonResponse
 from django.conf import settings
+from datetime import datetime, timedelta
 import random
-# Create your views here.
 
-def init(request):
-   
-    request.session["name"] = random.choice(settings.NAMES)
-    context = {}
-    context["name"] = request.session["name"]
-    return render(request, "ex00.html", context)
+
+def get_name(request):
+
+    current_time = datetime.now()
+
+    if "username" in request.session and "uname_timestamp" in request.session:
+
+        stored_timestamp = datetime.fromisoformat(request.session["uname_timestamp"])
+
+        if current_time - stored_timestamp < timedelta(seconds=5):
+            return request.session["username"]
+
+    new_username = random.choice(settings.NAMES)
+
+    request.session["username"] = new_username
+    request.session["uname_timestamp"] =current_time.isoformat()
+
+    return new_username
+
+
+
+def homepage(request):
+    
+    name = get_name(request)
+    return render(request, "ex00.html", {"name": name})
+
+
+
+def getUserName(request):
+
+    name = get_name(request)
+    return JsonResponse({"name": name})
