@@ -1,8 +1,9 @@
 from django.shortcuts import render
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.conf import settings
 from datetime import datetime, timedelta
 import random
+from .forms import RegisterForm
 
 
 def get_name(request):
@@ -13,7 +14,7 @@ def get_name(request):
 
         stored_timestamp = datetime.fromisoformat(request.session["uname_timestamp"])
 
-        if current_time - stored_timestamp < timedelta(seconds=5):
+        if current_time - stored_timestamp < timedelta(seconds=42):
             return request.session["username"]
 
     new_username = random.choice(settings.NAMES)
@@ -28,7 +29,7 @@ def get_name(request):
 def homepage(request):
     
     name = get_name(request)
-    return render(request, "ex00.html", {"name": name})
+    return render(request, "base.html", {"name": name})
 
 
 
@@ -36,3 +37,9 @@ def getUserName(request):
 
     name = get_name(request)
     return JsonResponse({"name": name})
+
+
+def register(request):
+    
+    form = RegisterForm()
+    return render(request, "register.html", {"form": form})
