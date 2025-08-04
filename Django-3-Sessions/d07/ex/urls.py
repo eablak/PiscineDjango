@@ -1,8 +1,8 @@
 from django.urls import path
-from . import views
+from .views import homepage, register
 
 urlpatterns = [
-    path("", views.homepage),
-    path("username_ajax/", views.getUserName),
-    path("register", views.register, name="register"),
+    path("", homepage.homepage),
+    path("username_ajax/", homepage.getUserName),
+    path("register", register.register, name="register"),
 ]

@@ -3,7 +3,6 @@ from django.http import HttpResponse, JsonResponse
 from django.conf import settings
 from datetime import datetime, timedelta
 import random
-from .forms import RegisterForm
 
 
 def get_name(request):
@@ -37,9 +36,3 @@ def getUserName(request):
 
     name = get_name(request)
     return JsonResponse({"name": name})
-
-
-def register(request):
-    
-    form = RegisterForm()
-    return render(request, "register.html", {"form": form})
