@@ -1,16 +1,97 @@
 {% extends "base.html" %}
 
-{% block title %}LOgin{% endblock %}
+{% block title %}Login{% endblock %}
 
 {% block style %}
+<style>
+    .form-wrapper {
+        display: flex;
+        justify-content: center;
+        margin-top: 60px;
+    }
 
+    form {
+        width: 400px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        background-color: #f9f9f9;
+        padding: 30px 40px;
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    label {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    input {
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+
+    .submit-wrapper {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .form-submit {
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .form-submit:hover {
+        background-color: #45a049;
+    }
+
+    .errorlist {
+        color: red;
+        font-size: 13px;
+        margin: 5px 0 0 0;
+        list-style: none;
+        padding-left: 0;
+    }
+
+    h1 {
+        text-align: center;
+        margin-top: 40px;
+        margin-bottom: 20px;
+    }
+</style>
 {% endblock %}
 
 {% block content %}
-    <h1>User Login!</h1>
-    <form class="form-with-validation" action="#" method="post">
+<h1>User Login!</h1>
+<div class="form-wrapper">
+    <form method="post">
         {% csrf_token %}
-        {{ form }}
-        <button class="form-submit">Submit</button>
+
+        <div class="form-group">
+            {{ form.username.label_tag }}
+            {{ form.username }}
+            {{ form.username.errors }}
+        </div>
+
+        <div class="form-group">
+            {{ form.password.label_tag }}
+            {{ form.password }}
+            {{ form.password.errors }}
+        </div>
+
+        <div class="submit-wrapper">
+            <button class="form-submit" type="submit">Login</button>
+        </div>
     </form>
+</div>
 {% endblock %}
