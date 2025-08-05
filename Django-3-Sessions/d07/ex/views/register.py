@@ -5,18 +5,28 @@ from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import logout
+from .homepage import get_notauth_name
+from django.db import models
 
 def register(request):
     
     if request.method == "POST":
         form = RegisterForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect("")
+            user = form.save()
+            login(request, user)
+            name = get_auth_username(request)
+            return render(request, "base.html", {"name": name})
     else:
         form = RegisterForm()
-
     return render (request, "register.html", {"form":form})
+
+
+def get_auth_username(request):
+    user = request.user
+    username = user.username
+    return username
 
 
 def login_page(request):
@@ -25,9 +35,16 @@ def login_page(request):
         form = AuthenticationForm(data=request.POST)
         if form.is_valid():
             login(request, form.get_user())
-            return redirect("homepage")
+            name = get_auth_username(request)
+            return render(request, "base.html", {"name": name})
     else:
         form = AuthenticationForm()
 
     return render(request, "login.html", {"form":form})
+
+
+def logout_page(request):
+
+    logout(request)
+    return render(request, "base.html")
         
