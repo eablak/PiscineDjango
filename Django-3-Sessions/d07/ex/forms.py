@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
+from .models import TipModel
 
 class RegisterForm(UserCreationForm):
     class Meta:
@@ -19,4 +20,7 @@ class RegisterForm(UserCreationForm):
         }
 
 
-
+class TipModelForm(forms.ModelForm):
+    class Meta:
+        model = TipModel
+        fields = ["content"]

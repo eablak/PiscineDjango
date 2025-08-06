@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}HomePage{% endblock %}
+
+{% block style %}
+
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Tip List!</h1>
+    <div class="list-group">
+        {% if tips %}
+            {% for tip in tips %}
+                <div class="list-group-item list-group-item-action flex-column align-items-start">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">
+                            {{ tip.author.username }}
+                        </h5>
+                        <small class="text-muted">{{ tip.date|date:"Y-m-d H:i" }}</small>
+                    </div>
+                    <p class="mb-1">{{ tip.content }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="list-group-item">No tips available.</p>
+        {% endif %}
+
+        {{ tip_form.as_p }}
+    </div>
+</div>
+{% endblock %}

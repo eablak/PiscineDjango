@@ -3,6 +3,8 @@ from django.http import HttpResponse, JsonResponse
 from django.conf import settings
 from datetime import datetime, timedelta
 import random
+from ..models import TipModel
+from ..forms import TipModelForm
 
 
 def get_notauth_name(request):
@@ -27,8 +29,11 @@ def get_notauth_name(request):
 
 def homepage(request):
     
-    name = get_notauth_name(request)
-    return render(request, "base.html", {"name": name})
+    context = {}
+    context["tips"] = TipModel.objects.all()
+    context["tip_form"] = TipModelForm(request.POST)
+    context["name"] = get_notauth_name(request)
+    return render(request, "homepage.html", context)
 
 
 
