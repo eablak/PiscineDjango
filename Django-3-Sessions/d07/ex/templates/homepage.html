@@ -3,7 +3,23 @@
 {% block title %}HomePage{% endblock %}
 
 {% block style %}
+<style>
+    .form-container {
+        max-width: 500px;
+        position: relative;
+        padding: 2rem;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+        background-color: #fff;
+    }
 
+    .submit-button {
+        position: absolute;
+        bottom: 1rem;
+        right: 1rem;
+    }
+</style>
 {% endblock %}
 
 {% block content %}
@@ -22,11 +38,19 @@
                     <p class="mb-1">{{ tip.content }}</p>
                 </div>
             {% endfor %}
-        {% else %}
-            <p class="list-group-item">No tips available.</p>
         {% endif %}
-
-        {{ tip_form.as_p }}
     </div>
+
+    {% if user.is_authenticated %}
+     <div class="d-flex justify-content-center align-items-center mt-5">
+        <div class="form-container">
+            <form method="post" class="form-group">
+                {% csrf_token %}
+                {{ tip_form.as_p }}
+                <button type="submit" class="btn btn-primary submit-button">Submit Tip</button>
+            </form>
+        </div>
+    </div>
+    {% endif %}
 </div>
 {% endblock %}

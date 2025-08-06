@@ -6,8 +6,8 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import logout
-from .homepage import get_notauth_name
 from django.db import models
+from .utils import *
 
 def register(request):
     
@@ -21,12 +21,6 @@ def register(request):
     else:
         form = RegisterForm()
     return render (request, "register.html", {"form":form})
-
-
-def get_auth_username(request):
-    user = request.user
-    username = user.username
-    return username
 
 
 def login_page(request):
