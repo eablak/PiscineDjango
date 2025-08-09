@@ -53,7 +53,7 @@
                                 </button>
                             </form>
 
-                            {% if tip.author == user %}
+                            {% if tip.author == user or user.is_superuser %}
                                 <form action="{% url 'delete_tip' tip.id %}" method="post" class="d-inline">
                                     {% csrf_token %}
                                     <button type="submit" class="btn btn-sm btn-outline-secondary">
