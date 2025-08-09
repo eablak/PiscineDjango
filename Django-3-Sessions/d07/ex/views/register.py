@@ -17,7 +17,7 @@ def register(request):
             user = form.save()
             login(request, user)
             name = get_auth_username(request)
-            return render(request, "base.html", {"name": name})
+            return redirect("homepage")
     else:
         form = RegisterForm()
     return render (request, "register.html", {"form":form})

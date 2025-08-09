@@ -8,7 +8,9 @@ from ..forms import TipModelForm
 from .register import get_auth_username
 from .utils import *
 from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 
+User = get_user_model()
 
 def upvote_tip(request, tip_id):
 
