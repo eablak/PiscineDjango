@@ -13,5 +13,11 @@ class TipModel(models.Model):
     downvoter = models.ManyToManyField(User, related_name="downvoter_users")
 
 
+    class Meta:
+        permissions = [
+            ("can_downvote", "Can Downvote"),
+        ]
+
     def __str__(self):
         return self.author.username
+    

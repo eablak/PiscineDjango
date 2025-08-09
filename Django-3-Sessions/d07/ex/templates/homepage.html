@@ -46,12 +46,14 @@
                                 </button>
                             </form>
 
+                            {% if tip.author == user or perms.ex.can_downvote %}
                             <form action="{% url 'downvote_tip' tip.id %}" method="post" class="d-inline">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-sm btn-danger">
                                     Downvote {{ tip.downvoter.count }}
                                 </button>
                             </form>
+                            {% endif %}
 
                             {% if tip.author == user or user.is_superuser %}
                                 <form action="{% url 'delete_tip' tip.id %}" method="post" class="d-inline">

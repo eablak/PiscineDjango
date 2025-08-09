@@ -30,7 +30,7 @@ def login_page(request):
         if form.is_valid():
             login(request, form.get_user())
             name = get_auth_username(request)
-            return render(request, "base.html", {"name": name})
+            return redirect("homepage")
     else:
         form = AuthenticationForm()
 
