@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.conf import settings
 from datetime import datetime, timedelta
@@ -7,7 +7,46 @@ from ..models import TipModel
 from ..forms import TipModelForm
 from .register import get_auth_username
 from .utils import *
+from django.contrib.auth.models import User
 
+
+def upvote_tip(request, tip_id):
+
+    tip = TipModel.objects.get(id=tip_id)
+    users = tip.upvoter.all()
+
+    if request.user in users:
+        tip.upvoter.remove(request.user)
+    else:
+        if request.user in tip.downvoter.all():
+            tip.downvoter.remove(request.user)
+        tip.upvoter.add(request.user)
+
+    return redirect ("homepage")
+
+
+def downvote_tip(request, tip_id):
+    
+    tip = TipModel.objects.get(id=tip_id)
+    users = tip.downvoter.all()
+
+    if request.user in users:
+        tip.downvoter.remove(request.user)
+    else:
+        if request.user in tip.upvoter.all():
+            tip.upvoter.remove(request.user)
+        tip.downvoter.add(request.user)
+        
+        if tip.downvoter.count() >= User.objects.count() * 0.7: 
+            tip.delete()
+    return redirect("homepage")
+
+
+def delete_tip(request, tip_id):
+    
+    tip = TipModel.objects.get(id=tip_id)
+    tip.delete()
+    return redirect("homepage")
 
 def homepage(request):
 
