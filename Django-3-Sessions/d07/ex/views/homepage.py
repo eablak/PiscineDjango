@@ -23,7 +23,8 @@ def upvote_tip(request, tip_id):
         if request.user in tip.downvoter.all():
             tip.downvoter.remove(request.user)
         tip.upvoter.add(request.user)
-
+    
+    tip.author.update_reputation()
     return redirect ("homepage")
 
 
@@ -39,15 +40,21 @@ def downvote_tip(request, tip_id):
             tip.upvoter.remove(request.user)
         tip.downvoter.add(request.user)
         
-        if tip.downvoter.count() >= User.objects.count() * 0.7: 
+        if tip.downvoter.count() >= User.objects.count() * 0.7:
+            tip_author = tip.author
             tip.delete()
+            tip_author.update_reputation()
+
+    tip.author.update_reputation()
     return redirect("homepage")
 
 
 def delete_tip(request, tip_id):
     
     tip = TipModel.objects.get(id=tip_id)
+    tip_author = tip.author 
     tip.delete()
+    tip_author.update_reputation()
     return redirect("homepage")
 
 def homepage(request):

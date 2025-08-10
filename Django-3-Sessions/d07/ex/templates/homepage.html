@@ -31,7 +31,7 @@
             {% for tip in tips %}
                 <div class="list-group-item">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="mb-1">{{ tip.author.username }}</h5>
+                        <h5 class="mb-1">{{ tip.author.username }}  ({{ tip.author.reputation }})</h5>
                         <small class="text-muted">{{ tip.date|date:"Y-m-d H:i" }}</small>
                     </div>
 
@@ -46,7 +46,7 @@
                                 </button>
                             </form>
 
-                            {% if tip.author == user or perms.ex.can_downvote %}
+                            {% if tip.author == user or perms.ex.can_downvote or user.downvote_permission %}
                             <form action="{% url 'downvote_tip' tip.id %}" method="post" class="d-inline">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-sm btn-danger">
@@ -55,7 +55,7 @@
                             </form>
                             {% endif %}
 
-                            {% if tip.author == user or user.is_superuser %}
+                            {% if tip.author == user or user.is_superuser or user.delete_permission %}
                                 <form action="{% url 'delete_tip' tip.id %}" method="post" class="d-inline">
                                     {% csrf_token %}
                                     <button type="submit" class="btn btn-sm btn-outline-secondary">

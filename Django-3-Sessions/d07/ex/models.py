@@ -24,4 +24,27 @@ class TipModel(models.Model):
     
 
 class CustomUser(AbstractUser):
+    
     reputation = models.IntegerField(default=0)
+
+
+    def update_reputation(self):
+        total_reputation = 0
+        user_tips = TipModel.objects.filter(author=self)
+        
+        for tip in user_tips:
+            upvotes = tip.upvoter.count()
+            downvotes = tip.downvoter.count()
+            total_reputation += (upvotes * 5) - (downvotes * 2)
+        
+        self.reputation = total_reputation
+        self.save()
+        return self.reputation
+    
+
+    def downvote_permission(self):
+        return self.reputation >= 15
+    
+
+    def delete_permission(self):
+        return self.reputation >= 30
