@@ -70,12 +70,15 @@ def populate(request):
         people_path = os.path.join(settings.BASE_DIR, "ex08/datas/people.csv")
         planets_path = os.path.join(settings.BASE_DIR, "ex08/datas/planets.csv")
 
+
         with open(planets_path) as f:
-            cursor.copy_expert("COPY ex08_planets (name, climate, diameter, orbital_period, population, rotation_period, surface_water, terrain) FROM STDIN DELIMITER '\t' NULL AS 'NULL';", f)
+            cursor.copy_from(f, "ex08_planets", sep="\t", null="NULL", columns=("name", "climate", "diameter",
+                          "orbital_period", "population",
+                          "rotation_period", "surface_water", "terrain"))
             results.append("OK")
 
         with open(people_path) as f:
-            cursor.copy_expert("COPY ex08_people (name, birth_year, gender, eye_color, hair_color, height, mass, homeworld) FROM STDIN DELIMITER '\t' NULL AS 'NULL';", f)
+            cursor.copy_from(f, "ex08_people", sep="\t", null="NULL", columns=("name", "birth_year", "gender", "eye_color", "hair_color", "height", "mass", "homeworld"))
             results.append("OK")
 
 

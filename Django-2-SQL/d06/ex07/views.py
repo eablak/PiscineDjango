@@ -72,9 +72,7 @@ def update(request):
             text = form.cleaned_data["textfield"]
         title = request.POST.get("selected_movie")
 
-        update_movie = Movies.objects.get(title=title)
-        update_movie.opening_crawl = text
-        update_movie.save()
+        Movies.objects.filter(title=title).update(opening_crawl=text)
 
         titles = Movies.objects.values_list("title")
             
