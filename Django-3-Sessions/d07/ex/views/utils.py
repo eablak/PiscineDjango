@@ -17,7 +17,7 @@ def get_notauth_name(request):
 
         stored_timestamp = datetime.fromisoformat(request.session["uname_timestamp"])
 
-        if current_time - stored_timestamp < timedelta(seconds=5):
+        if current_time - stored_timestamp < timedelta(seconds=42):
             return request.session["username"]
 
     new_username = random.choice(settings.NAMES)
