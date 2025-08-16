@@ -1,31 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Articles</h1>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Created</th>
-                <th>Synopsis</th>
-                <th>Content</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>{{ object.title }}</td>
-                <td>{{ object.author }}</td>
-                <td>{{ object.created }}</td>
-                <td>{{ object.synopsis }}</td>
-                <td>{{ object.content }}</td>
-            </tr>
-        </tbody>
-    </table>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Article Detail{% endblock %}
+
+{% block content %}
+
+<h1>Article Detail</h1>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Created</th>
+            <th>Synopsis</th>
+            <th>Content</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ object.title }}</td>
+            <td>{{ object.author }}</td>
+            <td>{{ object.created }}</td>
+            <td>{{ object.synopsis }}</td>
+            <td>{{ object.content }}</td>
+        </tr>
+    </tbody>
+</table>
+
+{% endblock %}

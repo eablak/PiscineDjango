@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Favourites{% endblock %}
+
+{% block content %}
+<h1>Publications</h1>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Title</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for fav in favourites %}
+        <tr>
+            <td><a href="{% url 'article_detail' fav.article.pk %}">{{ fav.article.title }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="3">No favourites yet.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

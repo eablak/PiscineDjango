@@ -1,37 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-</head>
-<body>
-    <main>
-        <section>
-            <h3>Log in!</h3>
-            <form method="post" novalidate>
-                {% csrf_token %}
-                {% for field in form %}
-                    <div>
-                        {{ field.label_tag }}
-                        {{ field }}
-                        {% if field.errors %}
-                            <small>{{ field.errors|striptags }}</small>
-                        {% endif %}
-                    </div>
-                {% endfor %}
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<main>
+    <section>
+        <h3>Log in!</h3>
+        <form method="post" novalidate>
+            {% csrf_token %}
+            {% for field in form %}
                 <div>
-                    <button type="submit">Login</button>
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {% if field.errors %}
+                        <small>{{ field.errors|striptags }}</small>
+                    {% endif %}
                 </div>
-            </form>
-			{% if messages %}
-			<ul>
-				{% for message in messages %}
-				<li>{{ message }}</li>
-				{% endfor %}
-			</ul>
-			{% endif %}
-        </section>
-    </main>
-</body>
-</html>
+            {% endfor %}
+            <div>
+                <button type="submit">Login</button>
+            </div>
+        </form>
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </section>
+</main>
+{% endblock %}
