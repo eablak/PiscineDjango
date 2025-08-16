@@ -3,7 +3,7 @@ function fetchUserName(){
         response => response.json()).then(
             data => {
                 console.log(data);
-                document.getElementById("username").innerText = data.name;
+                document.getElementById("username").innerText = "Hello " + data.name + "!";
             }).catch(
                 error => console.error("Error: ", error));
 };

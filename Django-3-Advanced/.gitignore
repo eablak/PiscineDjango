@@ -1,0 +1,5 @@
+myenv
+silver_screen/silver_screen/__pycache__
+silver_screen/article_app/__pycache__
+silver_screen/article_app/migrations
+db.sqlite3
