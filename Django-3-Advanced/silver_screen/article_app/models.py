@@ -20,5 +20,10 @@ class UserFavouriteArticle(models.Model):
     user = models.ForeignKey(User, null=False, on_delete=models.CASCADE)
     article = models.ForeignKey(Article, null=False, on_delete=models.CASCADE)
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'article'], name='unique_fav'),
+        ]
+
     def __str__(self):
         return self.article.title
