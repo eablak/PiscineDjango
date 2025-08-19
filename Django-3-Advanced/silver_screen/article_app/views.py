@@ -17,6 +17,7 @@ class ArticleView(generic.ListView):
     
     model = Article
     template_name = "article_app/article_list.html"
+    ordering = ['-created']
 
 
 class HomeView(generic.RedirectView):
