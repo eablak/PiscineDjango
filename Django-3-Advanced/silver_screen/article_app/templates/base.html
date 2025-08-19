@@ -1,3 +1,4 @@
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,8 +16,8 @@
     <br><br>
 
     <div class="d-flex align-items-center">
-        <h1 class="mr-3">Articles</h1>
-        <h2>Share your writings</h2>
+        <h1 class="mr-3">{% trans "Articles" %}</h1>
+        <h2>{% trans "Share your writings" %}</h2>
     </div>
 
     <hr>
@@ -35,13 +36,13 @@
         {% if user.is_authenticated %}
 
         <li class="nav-item">
-            <a class="nav-link" href="{% url 'articles' %}">Articles</a>
+            <a class="nav-link" href="{% url 'articles' %}">{% trans "Articles" %}</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{% url 'favourites' %}">Favourites</a>
+            <a class="nav-link" href="{% url 'favourites' %}">{% trans "Favourites" %}</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{% url 'publications' %}">Publications</a>
+            <a class="nav-link" href="{% url 'publications' %}">{% trans "Publications" %}</a>
         </li>
         </ul>
         

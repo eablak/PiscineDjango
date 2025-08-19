@@ -1,0 +1,48 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-08-19 09:12+0300\n"
+"PO-Revision-Date: 2025-08-19 09:17+0300\n"
+"Last-Translator:   <>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Translated-Using: django-rosetta 0.10.2\n"
+
+#: article_app/templates/base.html:19 article_app/templates/base.html:39
+msgid "Articles"
+msgstr "Articles"
+
+#: article_app/templates/base.html:20
+msgid "Share your writings"
+msgstr "Partagez vos écrits"
+
+#: article_app/templates/base.html:42
+msgid "Favourites"
+msgstr "Favoris"
+
+#: article_app/templates/base.html:45
+msgid "Publications"
+msgstr "Publications"
+
+#: silver_screen/settings.py:119
+msgid "English"
+msgstr "Anglais"
+
+#: silver_screen/settings.py:120
+msgid "French"
+msgstr "Français"
+
+#: silver_screen/settings.py:121
+msgid "Spanish"
+msgstr "Espagnol"
