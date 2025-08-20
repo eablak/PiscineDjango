@@ -1,18 +1,19 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block title %}Article Detail{% endblock %}
 
 {% block content %}
 
-<h1>Article Detail</h1>
+<h1>{% trans "Article Detail" %}</h1>
 <table border="1">
     <thead>
         <tr>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Created</th>
-            <th>Synopsis</th>
-            <th>Content</th>
+            <th>{% trans "Title" %}</th>
+            <th>{% trans "Author" %}</th>
+            <th>{% trans "Created" %}</th>
+            <th>{% trans "Synopsis" %}</th>
+            <th>{% trans "Content" %}</th>
         </tr>
     </thead>
     <tbody>
@@ -32,7 +33,7 @@
         {% csrf_token %}
         <br>
         <input type="hidden" name="article_id" value="{{ object.pk }}">
-        <input type="submit" value="Add To Favourite">
+        <input type="submit" value="{% trans 'Add To Favourite' %}">
     </form>
 
 {% endif %}

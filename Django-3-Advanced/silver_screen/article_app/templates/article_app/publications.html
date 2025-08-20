@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block title %}Publications{% endblock %}
 
@@ -7,9 +8,9 @@
 <table border="1">
     <thead>
         <tr>
-            <th>Title</th>
-            <th>Synopsis</th>
-            <th>Created</th>
+            <th>{% trans "Title" %}</th>
+            <th>{% trans "Synopsis" %}</th>
+            <th>{% trans "Created" %}</th>
         </tr>
     </thead>
     <tbody>
