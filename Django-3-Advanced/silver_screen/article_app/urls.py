@@ -10,7 +10,7 @@ urlpatterns = [
     path("logout", views.LogoutView.as_view(), name="logout"),
     path("favourites", views.FavouritesView.as_view(), name="favourites"),
     path("register", views.RegisterView.as_view(), name="register"),
-    path("publish", views.PublishView.as_view()),
+    path("publish", views.PublishView.as_view(), name="publish"),
     path("add_to_favourite", views.AddToFavouriteView.as_view(), name="add_to_favourite"),
 
 ]

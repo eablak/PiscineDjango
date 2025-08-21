@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-20 08:44+0300\n"
+"POT-Creation-Date: 2025-08-21 06:27+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -49,6 +49,11 @@ msgstr ""
 msgid "No favourites yet."
 msgstr ""
 
+#: article_app/templates/article_app/publications.html:7
+#: article_app/templates/base.html:62
+msgid "Publications"
+msgstr ""
+
 #: article_app/templates/base.html:19 article_app/templates/base.html:56
 #: article_app/templates/base.html:75
 msgid "Articles"
@@ -64,10 +69,6 @@ msgstr ""
 
 #: article_app/templates/base.html:59
 msgid "Favourites"
-msgstr ""
-
-#: article_app/templates/base.html:62
-msgid "Publications"
 msgstr ""
 
 #: article_app/templates/base.html:69

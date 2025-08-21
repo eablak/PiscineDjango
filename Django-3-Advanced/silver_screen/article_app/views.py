@@ -84,13 +84,13 @@ class RegisterView(SuccessMessageMixin, generic.CreateView):
     success_message = "Registiration is successfull!"
 
 
-class PublishView(generic.CreateView):
+class PublishView(LoginRequiredMixin, generic.CreateView):
     
-    def dispatch(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
-            return super().dispatch(request, *args, **kwargs)
-        else:
-            return redirect("home")
+    # def dispatch(self, request, *args, **kwargs):
+    #     if request.user.is_authenticated:
+    #         return super().dispatch(request, *args, **kwargs)
+    #     else:
+    #         return redirect("home")
         
     template_name = "article_app/publish.html"
     success_url = reverse_lazy("articles")

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-20 08:44+0300\n"
-"PO-Revision-Date: 2025-08-20 06:59+0300\n"
+"POT-Creation-Date: 2025-08-21 06:27+0300\n"
+"PO-Revision-Date: 2025-08-21 06:31+0300\n"
 "Last-Translator:   <>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -47,10 +47,14 @@ msgid "When"
 msgstr "Wann"
 
 #: article_app/templates/article_app/favourites.html:21
-#, fuzzy
 #| msgid "Favourites"
 msgid "No favourites yet."
 msgstr "Noch keine Favoriten."
+
+#: article_app/templates/article_app/publications.html:7
+#: article_app/templates/base.html:62
+msgid "Publications"
+msgstr "Veröffentlichungen"
 
 #: article_app/templates/base.html:19 article_app/templates/base.html:56
 #: article_app/templates/base.html:75
@@ -68,10 +72,6 @@ msgstr "Sprache"
 #: article_app/templates/base.html:59
 msgid "Favourites"
 msgstr "Favoriten"
-
-#: article_app/templates/base.html:62
-msgid "Publications"
-msgstr "Veröffentlichungen"
 
 #: article_app/templates/base.html:69
 msgid "Logged as "
@@ -98,10 +98,9 @@ msgid "Login"
 msgstr "Anmelden"
 
 #: article_app/templates/detail/detail.html:8
-#, fuzzy
 #| msgid "Articles"
 msgid "Article Detail"
-msgstr "Artikel"
+msgstr "Artikeldetail"
 
 #: article_app/templates/detail/detail.html:13
 msgid "Author"
