@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet"  href="static/css/login.css" />
+</head>
+
+<body>
+    
+    <div class="card"> 
+        <div class="box"> 
+                <form method="post"> 
+                    {% csrf_token %}
+                    <h1>Login</h1> 
+                    
+                    {% for field in form %}
+                        {{ field.label_tag }}
+                        {{ field }}
+                        
+                        {% if field.errors %}
+                            <small>{{ field.errors|striptags }}</small>
+                        {% endif %}
+                    {% endfor %}
+
+                    <input type="submit" value="Login">
+                        
+                    </div> 
+                </form>
+                
+                {% if messages %}
+                    <ul>
+                        {% for message in messages %}
+                        <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+        </div> 
+    </div> 
+</body>
+</html>
