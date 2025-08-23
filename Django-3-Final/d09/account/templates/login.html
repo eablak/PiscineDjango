@@ -1,42 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet"  href="static/css/login.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" 
+          content="width=device-width, 
+                   initial-scale=1,
+                   shrink-to-fit=no" />
+    <link rel="stylesheet" 
+          href=
+"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+    <title>Bootstrap Form</title>
 </head>
 
 <body>
-    
-    <div class="card"> 
-        <div class="box"> 
-                <form method="post"> 
-                    {% csrf_token %}
-                    <h1>Login</h1> 
-                    
-                    {% for field in form %}
-                        {{ field.label_tag }}
-                        {{ field }}
-                        
-                        {% if field.errors %}
-                            <small>{{ field.errors|striptags }}</small>
-                        {% endif %}
-                    {% endfor %}
-
-                    <input type="submit" value="Login">
-                        
-                    </div> 
-                </form>
-                
-                {% if messages %}
-                    <ul>
-                        {% for message in messages %}
-                        <li>{{ message }}</li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-        </div> 
-    </div> 
+    {% if not request.user.is_authenticated %}
+    <br>
+    <h1 class="text-success text-center">
+        Login
+    </h1>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <form method="POST">
+                            {% csrf_token %}
+                            
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Username</label>
+                                <input type="text" class="form-control" name="username" id="username" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" class="form-control" name="password" id="password" required>
+                            </div>
+                            
+                            {% if form.errors %}
+                            <div class="alert alert-danger">
+                                Invalid username or password
+                            </div>
+                            {% endif %}
+                            
+                            <button type="submit" class="btn btn-primary">Login</button>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    {% else %}
+        <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h4>Welcome, {{ request.user.username }}!</h4>
+                        <a href="{% url 'logout' %}" class="btn btn-outline-secondary mt-3">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 </body>
+
 </html>
