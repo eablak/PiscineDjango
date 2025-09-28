@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-color: aliceblue;
+            display: flex;
+            justify-content: center;   
+            align-items: center;       
+            height: 100vh;             
+   
+        }
+        ul {
+            padding: 0;
+        }
+        a{
+            display: block;
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #e63946;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    {% for room in rooms %}
+        <ul><a class="btn-btn primary" href="{% url 'room' room %}">{{ room }}</a></ul>
+    {% endfor %}
+</body>
+</html>
