@@ -6,13 +6,16 @@ class ChatConsumer(WebsocketConsumer):
     def connect(self):
         self.room_name = self.scope['url_route']['kwargs']['room_name']
         self.room_group_name = f'chat_{self.room_name}'
-        
+        self.username = self.scope['user'].username
+        user = self.scope['user']
+
         async_to_sync(self.channel_layer.group_add)(
             self.room_group_name,
             self.channel_name
         )
 
-        self.accept()
+        if user.is_authenticated:
+            self.accept()
    
 
     def receive(self, text_data):
@@ -23,14 +26,17 @@ class ChatConsumer(WebsocketConsumer):
             self.room_group_name,
             {
                 'type':'chat_message',
-                'message':message
+                'message':message,
+                'username': self.username
             }
         )
 
     def chat_message(self, event):
         message = event['message']
+        username = event['username']
 
         self.send(text_data=json.dumps({
             'type':'chat',
-            'message':message
+            'message':message,
+            'username': username
         }))

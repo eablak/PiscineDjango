@@ -4,46 +4,151 @@
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Lobby</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-
-</head>
-<body>
-    <h1>Lets chat!</h1>
-
-    <form id="form">
-        <input type="text" name="message"/>
-    </form>
-
-    <div id="messages"></div>
-
-    <script type="text/javascript">
-        const roomName = '{{ room_name }}';
-        let url = `ws://${window.location.host}/ws/socket-server/${roomName}/`
-
-        const chatSocket = new WebSocket(url)
-
-        chatSocket.onmessage = function(e){
-            let data = JSON.parse(e.data)
-            console.log('Data:', data)
-
-            if(data.type === 'chat'){
-                let messages = document.getElementById('messages')
-
-                messages.insertAdjacentHTML('beforeend', `<div>
-                                        <p>${data.message}</p>
-                                    </div>`)
-            }
+    <style>
+        .chat-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        let form = document.getElementById('form')
-        form.addEventListener('submit', (e)=> {
-            e.preventDefault()
-            let message = e.target.message.value 
-            chatSocket.send(JSON.stringify({
-                'message':message
-            }))
-            form.reset()
-        })
+        .message-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message {
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            max-width: 70%;
+            word-wrap: break-word;
+            display: flex;
+            align-items: center;
+        }
+
+        .sender-message {
+            background-color: #e0e0e0;
+            color: #000;
+            align-self: flex-start;
+        }
+
+        .receiver-message {
+            background-color: #4CAF50;
+            color: #fff;
+            align-self: flex-end;
+        }
+
+        .input-container {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #ddd;
+        }
+
+        .input-container input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .input-container button {
+            padding: 8px 15px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .input-container button:hover {
+            background-color: #45a049;
+        }
+
+        .h1{
+            text-align: center;
+        }
+        .sender-username {
+            font-size: 0.75rem;
+            color: rgb(20, 20, 20);
+            align-self: flex-start;
+            margin-top: 0px;
+            margin-bottom: 10px;
+        }
+
+        .receiver-username {
+            font-size: 0.75rem;
+            color: rgb(20, 20, 20);
+            align-self: flex-end;
+            margin-top: 0px;
+            margin-bottom: 10px;
+        }
+
+    </style>
+    <title></title>
+</head>
+
+<body>
+    <div class="chat-container">
+        <h1 class="h1">Welcome to {{room_name}}</h1>
+        <div class="message-container" id="messages-sender">
+            <p id="sender-username"></p>
+        </div>
+        
+        <div class="message-container" id="messages-receiver">
+            <p id="receiver-username"></p>
+        </div>
+            
+        <div class="input-container">
+            <input type="text" id="message-input"
+                placeholder="Type your message...">
+            <button id="send-btn">Send</button>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
+    <script type="text/javascript">
+        $(document).ready(function(){
+            const roomName = '{{ room_name }}';
+            let url = `ws://${window.location.host}/ws/socket-server/${roomName}/`
+            const chatSocket = new WebSocket(url)
+            chatSocket.onmessage = function(e){
+                let data = JSON.parse(e.data)
+                console.log('Data:', data)
+    
+                if(data.type === 'chat'){
+                    if ('{{request.user.username}}' === data.username){
+                        $('#messages-receiver').append(
+                            `<div class="message receiver-message"> ${data.message} </div> 
+                            <p class="receiver-username">sended by @${data.username}</p>
+                            `)
+                    }
+                    else{
+                        $('#messages-sender').append(
+                            `<div class="message sender-message"> ${data.message}</div>
+                            <p class="sender-username">sended by  @${data.username}</p>
+                            `)
+                    }
+                }
+            }
+            
+            $('#send-btn').click(function(e){
+                e.preventDefault()
+                let message = $('#message-input').val()
+
+                if (message.trim()){
+                    chatSocket.send(JSON.stringify({
+                        'message': message
+                    }))
+                    $('#message-input').val('')
+                }
+            })
+        });
+
 
     </script>
 </body>
