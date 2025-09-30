@@ -1,2 +1,5 @@
 myenv
 staticfiles
+d09/d09/__pycache__
+d09/account/__pycache__
+d09/chat/__pycache__
