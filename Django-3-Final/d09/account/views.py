@@ -30,7 +30,9 @@ class LoginCheckView(View):
     
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return JsonResponse({"success":"True"})
+            user = request.user
+            username = user.username
+            return JsonResponse({"success":"True", "username":username})
         else:
             return JsonResponse({"success":"False"})
 

@@ -60,6 +60,7 @@ $(document).ready(function(){
                 logout_form = document.getElementById('logout_form');
                 logout_form.style.display = 'inline';
                 login_form.style.display = 'none';
+                $('#username_id').text(response.username);
             }else{
                 login_form = document.getElementById('login_form');
                 login_form.style.display = 'inline';

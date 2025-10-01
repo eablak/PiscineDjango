@@ -52,6 +52,8 @@
         .message-container {
             display: flex;
             flex-direction: column;
+            height: 600px;
+            overflow-y: auto;
         }
 
         .message {
@@ -219,6 +221,10 @@
                         $('#userlist').append(`<li class="list-group-item">${user}</li>`)
                     })
                 }
+
+
+                $('#messages').scrollTop($('#messages').prop("scrollHeight"))
+
             }
             
             $('#send-btn').click(function(e){
