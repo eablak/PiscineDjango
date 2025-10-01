@@ -44,16 +44,23 @@ class ChatConsumer(AsyncWebsocketConsumer):
             await self.accept()
 
             last_three = await get_last_three(self.room_name)
-
+            
+            await sync_to_async(ChatRoomUsers.objects.create)(
+                user = self.user,
+                room = await sync_to_async(ChatRoom.objects.get)(name=self.room_name)
+            )
+            userlist = await self.get_userlist()
+            
             await self.channel_layer.group_send(
             self.room_group_name,
             {
                 'type': 'user_joined',
                 'username': self.username,
-                'last_three': last_three
+                'last_three': last_three,
+                'userlist': userlist
             }
             )
-   
+
 
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)
@@ -75,6 +82,28 @@ class ChatConsumer(AsyncWebsocketConsumer):
         )
 
 
+    async def disconnect(self, code):
+
+        user = await sync_to_async(User.objects.get)(username=self.username)
+        room = await sync_to_async(ChatRoom.objects.get)(name=self.room_name)
+
+        await sync_to_async(lambda: ChatRoomUsers.objects.filter(user=user, room=room).delete())()
+
+        userlist = await self.get_userlist()
+        await self.channel_layer.group_send(
+            self.room_group_name,
+            {
+                'type': 'user_disconnect',
+                'username': self.username,
+                'userlist': userlist
+            }
+        )
+
+        await self.channel_layer.group_discard(
+            self.room_group_name,
+            self.room_name
+        )
+
     async def chat_message(self, event):
         message = event['message']
         username = event['username']
@@ -90,5 +119,22 @@ class ChatConsumer(AsyncWebsocketConsumer):
         await self.send(text_data=json.dumps({
             'type': 'user-joined',
             'username': event['username'],
-            'last_three': event.get('last_three', [])
+            'last_three': event.get('last_three', []),
+            'userlist': event.get('userlist', [])
         }))
+
+    async def get_userlist(self):
+        chatroomusers = await sync_to_async(ChatRoomUsers.objects.filter)(room__name=self.room_name)
+        chatroomusers = await sync_to_async(chatroomusers.distinct)()
+        chatroomusers = await sync_to_async(chatroomusers.values_list)('user__username', flat=True)
+        print(await sync_to_async(list)(chatroomusers))
+        return await sync_to_async(list)(chatroomusers)
+    
+    
+    async def user_disconnect(self, event):
+        await self.send(text_data=json.dumps({
+            'type': 'user-left',
+            'username': event['username'],
+            'userlist': event.get('userlist', [])
+        }))
+        
